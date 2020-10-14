@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Article;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\FuncCall;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index', 'show');
+    }
+
     public function index()
     {
         $articles = Article::latest()->paginate(9);
@@ -27,7 +33,7 @@ class ArticleController extends Controller
 
         $attr['slug'] =  \Str::slug(request('title')) . '-' . \Str::random(10);
 
-        $article = Article::create($attr);
+        $article = Auth::user()->articles()->create($attr);
 
         return redirect()->route('articles.show', $article);
     }

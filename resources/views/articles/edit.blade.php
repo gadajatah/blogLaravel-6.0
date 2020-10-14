@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+@section('title', 'Edit Article')
 @section('content')
     <div class="container">
         <div class="row">
@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <form action=" {{ route('articles.edit', $article) }} " method="post">
                             @include('articles.partials.form', [
-                                'submit' => 'Update',
+                            'submit' => 'Update',
                             ])
                         </form>
                     </div>
